@@ -1,6 +1,6 @@
 "use client";
 
-import info from "../extra/info.json";
+import info from "../../info.json";
 
 export default function Home() {
   function createLS() {

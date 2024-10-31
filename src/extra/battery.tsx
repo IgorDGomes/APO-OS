@@ -2,7 +2,7 @@
 
 async function getInfo() {
   try {
-    let battery = await navigator.getBattery();
+    const battery = await navigator.getBattery();
 
     return console.log(battery);
   } catch (error) {

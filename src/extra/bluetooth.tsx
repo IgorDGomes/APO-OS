@@ -1,8 +1,9 @@
 import { BluetoothButton } from "@/components/bluetoothButton";
 
 export default async function Home() {
-  let data = await fetch("http://127.0.0.1:3000/api/message");
-  let result = await data.json();
+  const data = await fetch("http://127.0.0.1:3000/api/message");
+  const result = await data.json();
+  console.log(result);
 
   return (
     <div className="h-screen flex flex-col items-center justify-center gap-10">
