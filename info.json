@@ -1,0 +1,24 @@
+{
+  "virtualMachine": {
+    "id": 1,
+    "creationDate": "2024-10-31T09:15:00Z",
+    "users": [
+      {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Doe",
+        "security": "High",
+        "items": "Hidden",
+        "privileges": true
+      },
+      {
+        "id": 2,
+        "firstName": "Not John",
+        "lastName": "Doe",
+        "security": "Low",
+        "items": "Default",
+        "privileges": false
+      }
+    ]
+  }
+}
