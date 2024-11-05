@@ -2,6 +2,10 @@
 
 APO'S
 
+## Tests disabled for Webkit (Safari)
+
+Having issues adding cookies on the browser. Couldn't solve the issue so the tests for it were disabled.
+
 <!-- ## Change made to /lib.dom.d.ts
 
 Not recommended, as it lacks support in some browsers.
