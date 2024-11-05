@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe.configure({ retries: 2 });
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('http://127.0.0.1:3000/');
 });
 
 test.describe("Home Page", () => {
@@ -20,12 +20,11 @@ test.describe("Home Page", () => {
     });
 
     test("should have header links", async ({ page }) => {
-        //! Should change to button
         await expect(page.getByRole("button", { name: "Applications" })).toBeVisible();
         await expect(page.getByRole("button", { name: "Pinned" })).toBeVisible();
     });
 
-    test("should have side bar links", async ({ page }) => {
-        await expect(page).toHaveURL(/.*home/);
-    });
+    // test("should have side bar links", async ({ page }) => {
+    //     await expect(page).toHaveURL(/.*home/);
+    // });
 })

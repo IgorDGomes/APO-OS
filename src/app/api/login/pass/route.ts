@@ -16,10 +16,10 @@ export async function POST(req: Request) {
                 // domain: "apo-os.vercel.app",
             });
 
-            return Response.redirect("http://127.0.0.1:3000/home");
+            return Response.redirect("https://apo-os.vercel.app/home");
         }
 
-        return Response.redirect("http://127.0.0.1:3000/");
+        return Response.redirect("https://apo-os.vercel.app/");
     } catch (error) {
         console.error("Error fetching username: ", error);
 

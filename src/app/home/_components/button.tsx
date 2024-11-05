@@ -1,22 +1,24 @@
-import Link from "next/link";
+"use client";
+
+import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonProps {
-  link: string;
-  name: string;
-  className: string;
+  className?: string;
+  children: ReactNode;
+  action: () => void;
 }
 
-export function Button({ link, name, className }: ButtonProps) {
+export function Button({ className, children, action }: ButtonProps) {
   return (
-    <Link
-      href={link}
+    <button
       className={twMerge(
-        "flex items-center justify-center p-2 rounded-md hover:bg-white/30",
+        "flex items-center justify-center hover:bg-white/20 p-2 rounded-md",
         className
       )}
+      onClick={action}
     >
-      {name}
-    </Link>
+      {children}
+    </button>
   );
 }

@@ -1,4 +1,4 @@
-name: Continuos Integration
+name: Continuous Integration
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main, master]
 
 jobs:
-  continuos-integration:
+  continuous-integration:
     runs-on: ubuntu-latest
 
     steps:

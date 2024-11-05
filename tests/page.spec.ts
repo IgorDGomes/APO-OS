@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe.configure({ retries: 2 });
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('http://127.0.0.1:3000/');
 });
 
 test.describe("Login Page Info", () => {
