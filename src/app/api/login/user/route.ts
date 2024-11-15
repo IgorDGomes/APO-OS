@@ -12,14 +12,16 @@ export async function POST(req: Request) {
                 secure: true,
                 httpOnly: true,
                 path: "/",
-                // domain: "127.0.0.1",
-                domain: "apo-os.vercel.app",
+                domain: "127.0.0.1",
+                // domain: "apo-os.vercel.app",
             });
 
-            return Response.redirect("https://apo-os.vercel.app");
+            // return Response.redirect("https://apo-os.vercel.app");
+            return Response.redirect("http://127.0.0.1:3000");
         }
 
-        return Response.redirect("https://apo-os.vercel.app");
+        // return Response.redirect("https://apo-os.vercel.app");
+        return Response.redirect("http://127.0.0.1:3000");
     } catch (error) {
         console.error("Error fetching username: ", error);
 

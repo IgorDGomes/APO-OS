@@ -1,10 +1,13 @@
 # APO-OS
 
-APO'S
+## Login
 
-## Tests disabled for Webkit (Safari)
+- Username: admin
+- Password: 12345
 
-Having issues adding cookies on the browser. Couldn't solve the issue so the tests for it were disabled.
+## Tests for Webkit (Safari)
+
+There were issues adding cookies on the browser. Couldn't solve the issue, so the tests for it were disabled.
 
 <!-- ## Change made to /lib.dom.d.ts
 

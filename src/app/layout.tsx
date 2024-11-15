@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "APO'S",
-  description: "",
+  description:
+    "Experience a virtual operating system with interactive features and customizations. Dive into a creative, futuristic digital environment today!",
 };
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased overflow-hidden`}>{children}</body>
     </html>
   );
 }

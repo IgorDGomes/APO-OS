@@ -40,7 +40,10 @@ yarn-error.log*
 next-env.d.ts
 
 # extra
-files.md
+*.extra.md
+*.extra.json
+*.extra.tsx
+
 node_modules/
 /test-results/
 /playwright-report/
