@@ -34,6 +34,7 @@ import { Terminal } from "./_tabs/terminal";
 import { FileManager } from "./_tabs/fileManager";
 import { Browser } from "./_tabs/browser";
 import { Clock } from "./_tabs/clock";
+import TextEditor from "./_tabs/textEditor";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -62,7 +63,7 @@ export default async function Home() {
               <EarthIcon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />
-            <Button content={<p>Something Here</p>}>
+            <Button content={<TextEditor />}>
               <FileCode2Icon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />

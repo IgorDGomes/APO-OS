@@ -23,7 +23,7 @@ export default async function Login() {
     <>
       <main className="h-screen hidden md:flex flex-col items-center justify-center gap-10">
         <div className="flex flex-col items-center gap-4">
-          <CircleUserRound className="size-36 stroke-1" />
+          <CircleUserRound className="size-36 stroke-1 text-white" />
           {confirmedUser ? <PassForm /> : <UserForm />}
         </div>
       </main>

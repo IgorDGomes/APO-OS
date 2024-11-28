@@ -34,4 +34,20 @@ function secondCorretion(second: number): string | number {
   return fixedSecond
 }
 
-export { hourCorrection, minuteCorrection, secondCorretion };
+function millisecondCorretion(millisecond: number): string | number {
+  let fixedMillisecond: string | number;
+
+  if (millisecond < 100) {
+    fixedMillisecond = "0" + millisecond;
+
+    if (millisecond < 10) {
+      fixedMillisecond = "0" + fixedMillisecond;
+    }
+  } else {
+    return millisecond
+  }
+
+  return fixedMillisecond
+}
+
+export { hourCorrection, minuteCorrection, secondCorretion, millisecondCorretion };

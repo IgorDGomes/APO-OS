@@ -5,7 +5,7 @@ import {
   hourCorrection,
   minuteCorrection,
   secondCorretion,
-} from "../lib/hourCorrection";
+} from "../lib/timeCorrection";
 import { twMerge } from "tailwind-merge";
 
 type HourType = { className?: string };
