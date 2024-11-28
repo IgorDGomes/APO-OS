@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe.configure({ retries: 2 });
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('http://127.0.0.1:3000/');
+  await page.goto('https://apo-os.vercel.app/');
 });
 
 test.describe("Login Page", () => {
@@ -19,12 +19,12 @@ test.describe("Login Page", () => {
     await password.fill("12345");
     await password.press("Enter");
 
-    await expect(page).toHaveURL("http://127.0.0.1:3000/home");
+    await expect(page).toHaveURL("https://apo-os.vercel.app/home");
   });
 
   test("shouldn't return to login page", async ({ page }) => {
-    await page.goto("http://127.0.0.1:3000/");
+    await page.goto("https://apo-os.vercel.app/");
 
-    await expect(page).toHaveURL("http://127.0.0.1:3000/home");
+    await expect(page).toHaveURL("https://apo-os.vercel.app/home");
   });
 });
