@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Ellipsis,
   ChevronDown,
   ChevronRight,
   RotateCw,
@@ -13,9 +12,9 @@ import {
 import { useState } from "react";
 
 export function SearchTab() {
-  const [projectFolderOpen, setProjectFolderOpen] = useState(false);
-  const [openEditorsOpen, setOpenEditorsOpen] = useState(false);
-  const [timelineOpen, setTimelineOpen] = useState(false);
+  // const [projectFolderOpen, setProjectFolderOpen] = useState(false);
+  // const [openEditorsOpen, setOpenEditorsOpen] = useState(false);
+  // const [timelineOpen, setTimelineOpen] = useState(false);
 
   const [searchOptions, setSearchOptions] = useState(false);
 

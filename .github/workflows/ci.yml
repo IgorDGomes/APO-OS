@@ -26,4 +26,6 @@ jobs:
         run: npm run lint
 
       - name: Run test
-        run: npm run test
+        run: |
+          npx playwright install
+          npm run test
