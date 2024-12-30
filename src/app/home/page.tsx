@@ -8,9 +8,7 @@ import {
   LogOutIcon,
   SettingsIcon,
   SquareTerminalIcon,
-  // Volume1Icon,
   Volume2Icon,
-  // VolumeXIcon,
   WifiIcon,
 } from "lucide-react";
 import { cookies } from "next/headers";
@@ -35,6 +33,7 @@ import { FileManager } from "./_tabs/fileManager";
 import { Browser } from "./_tabs/browser";
 import { Clock } from "./_tabs/clock";
 import TextEditor from "./_tabs/textEditor";
+import { OpenSettings } from "./_components/settingsTab/checkOS";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -80,9 +79,9 @@ export default async function Home() {
             </Button>
           </div>
           <div className="h-[10%] flex items-center justify-center">
-            <Button content={<p>Something Here</p>}>
+            <OpenSettings>
               <SettingsIcon className="stroke-white size-9 stroke-[1.5]" />
-            </Button>
+            </OpenSettings>
           </div>
         </div>
         <div className="w-full">
@@ -100,8 +99,6 @@ export default async function Home() {
               <div className="flex">
                 <WifiIcon className="stroke-white size-6 stroke-[1.5] -rotate-45" />
                 <Volume2Icon className="stroke-white size-6 stroke-[1.5]" />
-                {/* <Volume1Icon className="stroke-white size-6 stroke-[1.5]" />
-                <VolumeXIcon className="stroke-white size-6 stroke-[1.5]" /> */}
               </div>
               <Dialog>
                 <DialogTrigger>
