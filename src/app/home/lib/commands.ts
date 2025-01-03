@@ -1,88 +1,80 @@
-import { Commands } from "@/types/commandsType";
+import { Directories, TreeDirectory } from "@/types/commandsType"
 
-export const commands: Commands = {
-    "shellCommands": {
-        "cd": {
-            "~": "default",
-            "/pc": {
-                "/pc/Users": {
-                    "/pc/Users/Default": {
-                        "pc/Users/Default/Documents": ["Videos", "Pictures", "Musics"],
-                        "pc/Users/Default/Desktop": [],
-                        "pc/Users/Default/Downloads": [],
-                        "pc/Users/Default/Pinned": [
-                            "Browser",
-                            "Text Editor",
-                            "Github",
-                            "Clock"
-                        ],
-                        "pc/Users/Default/Applications": [
-                            "Terminal",
-                            "File Manager",
-                            "Browser",
-                            "Text Editor",
-                            "Github",
-                            "Clock",
-                            "Settings"
-                        ]
-                    }
+export const directories: Directories = {
+    "~": ["Documents", "Desktop", "Downloads", "Pinned", "Applications"],
+    "/": ["bash.exe", "bin"],
+    "bin": [""],
+    "pc": ["Users", "Program Files"],
+    "pc/Users": ["Default"],
+    "pc/Users/Default": [
+        "Documents",
+        "Desktop",
+        "Downloads",
+        "Pinned",
+        "Applications"
+    ],
+    "pc/Users/Default/Applications": [
+        "Browser",
+        "Clock",
+        "File Manager",
+        "Github",
+        "Settings",
+        "Terminal",
+        "Text Editor"
+    ],
+    "pc/Users/Default/Desktop": [""],
+    "pc/Users/Default/Documents": ["Musics", "Pictures", "Videos"],
+    "pc/Users/Default/Documents/Musics": [""],
+    "pc/Users/Default/Documents/Pictures": [""],
+    "pc/Users/Default/Documents/Videos": [""],
+    "pc/Users/Default/Downloads": [""],
+    "pc/Users/Default/Pinned": ["Browser", "Clock", "Github", "Text Editor"],
+    "pc/Program Files": ["Browser", "Github", "Text Editor"],
+    "pc/Program Files/Browser": ["Application"],
+    "pc/Program Files/Browser/Application": ["browser.exe"],
+    "pc/Program Files/Github": ["https://github.com/IgorDGomes.html"],
+    "pc/Program Files/Text Editor": ["textEditor.exe"],
+}
+
+export const tree: TreeDirectory = {
+    "/": {
+        "bash.exe": "",
+        "bin": {}
+    },
+    "pc": {
+        "Users": {
+            "Default": {
+                "Applications": {
+                    "Browser": ["browser.exe"],
+                    "Clock": ["clock.exe"],
+                    "File Manager": [""],
+                    "Github": ["https://github.com/IgorDGomes.html"],
+                    "Settings": [""],
+                    "Terminal": ["bash.exe"],
+                    "Text Editor": ["textEditor.exe"]
                 },
-                "/pc/Program Files": {
-                    "Browser": {
-                        "Application": "browser.exe"
-                    },
-                    "Github": "https://github.com/IgorDGomes.html",
-                    "Text Editor": "TextEditor.exe"
-                }
+                "Desktop": {},
+                "Documents": {
+                    "Musics": {},
+                    "Pictures": {},
+                    "Videos": {}
+                },
+                "Downloads": {},
+                "Pinned": [
+                    "Browser",
+                    "Clock",
+                    "Github",
+                    "Text Editor"
+                ]
             }
         },
-        "ls": {
-            "~": "",
-            "/pc": ["Users", "Program Files"],
-            "/pc/Users": ["Default"],
-            "/pc/Users/Default": [
-                "Documents",
-                "Desktop",
-                "Downloads",
-                "Pinned",
-                "Applications"
-            ],
-            "/pc/Users/Default/Documents": ["Videos", "Pictures", "Musics"],
-            "/pc/Users/Default/Desktop": [],
-            "/pc/Users/Default/Downloads": [],
-            "/pc/Users/Default/Pinned": ["Browser", "Text Editor", "Github", "Clock"],
-            "/pc/Users/Default/Applications": [
-                "Terminal",
-                "File Manager",
-                "Browser",
-                "Text Editor",
-                "Github",
-                "Clock",
-                "Settings"
-            ],
-            "/pc/Program Files": ["Browser", "Github", "Text Editor"],
-            "/pc/Program Files/Browser": ["Application"],
-            "/pc/Program Files/Browser/Application": ["browser.exe"],
-            "/pc/Program Files/Github": ["https://github.com/IgorDGomes.html"],
-            "/pc/Program Files/Text Editor": ["TextEditor.exe"]
-        },
-        "pwd": [
-            "~",
-            "/",
-            "pc",
-            "pc/Users",
-            "pc/Users/Default",
-            "pc/Users/Default/Documents",
-            "pc/Users/Default/Desktop",
-            "pc/Users/Default/Downloads",
-            "pc/Users/Default/Pinned",
-            "pc/Users/Default/Applications",
-            "pc/Program Files",
-            "pc/Program Files/Browser",
-            "pc/Program Files/Browser/Application",
-            "pc/Program Files/Github",
-            "pc/Program Files/Text Editor"
-        ]
+        "Program Files": {
+            "Browser": {
+                "Application": ["browser.exe"]
+            },
+            "Github": [],
+            "Text Editor": ["textEditor.exe"]
+        }
     }
 }
 
