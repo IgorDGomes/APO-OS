@@ -9,6 +9,7 @@ import {
   MinusIcon,
   RotateCwIcon,
   SquareIcon,
+  WifiOffIcon,
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -168,7 +169,21 @@ export function Browser() {
             sandbox="allow-forms allow-popups allow-scripts allow-same-origin allow-popups-to-escape-sandbox"
           ></iframe>
         ) : (
-          <p>Not working</p>
+          <div className="bg-[#EFEFEF] w-full h-full flex justify-center">
+            <div className="flex flex-col gap-4 pt-20">
+              <div className="flex items-end gap-6">
+                <WifiOffIcon className="size-20 stroke-[1.5]" />
+                <p className="font-bold text-lg">No Internet</p>
+              </div>
+              <div>
+                <h3 className="font-semibold">Try:</h3>
+                <ul className="list-disc pl-10">
+                  <li className="text-sm">Checking the network cables</li>
+                  <li className="text-sm">Reconnecting to Wi-Fi</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>

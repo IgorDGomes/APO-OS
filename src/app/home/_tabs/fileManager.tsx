@@ -77,6 +77,7 @@ export function FileManager() {
             action=""
             method="post"
             className="w-full h-full flex items-center"
+            onSubmit={(i) => i.preventDefault()}
           >
             <div className="flex items-center bg-white h-[85%] w-full rounded-sm overflow-hidden">
               <button className="px-2 border-r-[1px] border-black/20">

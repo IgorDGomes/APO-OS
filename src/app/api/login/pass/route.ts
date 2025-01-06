@@ -10,13 +10,14 @@ export async function POST(req: Request) {
         if (password?.toString().toLowerCase() === "12345") {
             const cookieStore = await cookies();
             cookieStore.set("password", "aReallyStrongPasswordHere", {
-                maxAge: 7 * 24 * 60 * 60,
+                maxAge: 30 * 24 * 60 * 60,
                 secure: true,
                 httpOnly: true,
                 path: "/",
                 domain: "apo-os.vercel.app",
             });
             cookieStore.set("desktop_id", uuid, {
+                maxAge: 365 * 24 * 60 * 60,
                 secure: true,
                 httpOnly: true,
                 path: "/",

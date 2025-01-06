@@ -2,7 +2,6 @@
 
 import { EllipsisIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { ChangeEvent, useState } from "react";
-import { commands, findMatch } from "../lib/commands";
 
 export function Terminal() {
   const [userPrompt, setUserPrompt] = useState("");
@@ -20,29 +19,8 @@ export function Terminal() {
   }
 
   function executeCommand(command: string) {
-    if (command.includes("cd ")) {
-      const dir = command.replace("cd ", `${directory}`);
-
-      if (dir.includes("../")) {
-        const backwards = dir.split("../");
-        console.log(backwards);
-        backwards.forEach((e) => {
-          if (e === "") {
-            console.log("back");
-          }
-        });
-      }
-
-      const found = findMatch(commands.shellCommands.pwd, dir);
-      console.log(found);
-
-      setDirectory(dir);
-    } else if (command.includes("ls ")) {
-      console.log("ls chosen");
-    } else if (command.trim() === "pwd") {
-      console.log("pwd chosen");
-      console.log(directory);
-    }
+    console.log(command);
+    setDirectory("~");
   }
 
   return (

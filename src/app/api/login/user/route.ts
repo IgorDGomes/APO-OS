@@ -8,7 +8,7 @@ export async function POST(req: Request) {
         if (username?.toString().toLowerCase() === "admin") {
             const cookieStore = await cookies();
             cookieStore.set("username", "admin", {
-                maxAge: 7 * 24 * 60 * 60,
+                maxAge: 30 * 24 * 60 * 60,
                 secure: true,
                 httpOnly: true,
                 path: "/",

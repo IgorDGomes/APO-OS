@@ -32,21 +32,12 @@ export default function TextEditor() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [extensionsOpen, setExtensionsOpen] = useState(false);
 
-  const [tabOpen, setTabOpen] = useState(true);
-
   function isExplorerTabOpen() {
     if (!explorerOpen) {
       setExplorerOpen(true);
 
       setSearchOpen(false);
       setExtensionsOpen(false);
-    }
-
-    if (tabOpen && explorerOpen) {
-      setTabOpen(false);
-      setExplorerOpen(false);
-    } else if (!tabOpen) {
-      setTabOpen(true);
     }
   }
 
@@ -57,13 +48,6 @@ export default function TextEditor() {
       setExplorerOpen(false);
       setExtensionsOpen(false);
     }
-
-    if (tabOpen && searchOpen) {
-      setTabOpen(false);
-      setExplorerOpen(false);
-    } else if (!tabOpen) {
-      setTabOpen(true);
-    }
   }
 
   function isExtensionsTabOpen() {
@@ -72,13 +56,6 @@ export default function TextEditor() {
 
       setExplorerOpen(false);
       setSearchOpen(false);
-    }
-
-    if (tabOpen && extensionsOpen) {
-      setTabOpen(false);
-      setExplorerOpen(false);
-    } else if (!tabOpen) {
-      setTabOpen(true);
     }
   }
 
@@ -149,7 +126,7 @@ export default function TextEditor() {
         </div>
         {/* Content */}
         <div className="flex h-[calc(100%-28px-20px)]">
-          <div className="w-12 border-r border-white/10 flex flex-col justify-between">
+          <div className="w-12 border-r border-white/10 flex flex-col justify-between bg-[rgb(34,34,37)]">
             <div className="w-12 flex flex-col">
               <button onClick={isExplorerTabOpen}>
                 {explorerOpen ? (
@@ -209,7 +186,7 @@ export default function TextEditor() {
           <TextArea />
         </div>
         {/* Footer */}
-        <div className="h-5 border-t border-white/10 flex items-center justify-between">
+        <div className="h-5 border-t border-white/10 flex items-center justify-between bg-[rgb(34,34,37)]">
           <div className="flex gap-1">
             <button className="relative flex  items-center w-9 bg-blue-500 hover:bg-blue-500/90 hover:">
               <ChevronRight className="size-4 absolute bottom-0 left-2 text-white" />

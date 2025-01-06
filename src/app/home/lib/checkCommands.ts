@@ -1,8 +1,30 @@
 import { TreeDirectory } from "@/types/commandsType";
-import { tree, directories } from "./commands";
+import { tree } from "./commands";
 
 let currentPath = "/";
-let currentDirectory: TreeDirectory = tree;
+let currentDirectory: TreeDirectory | string | string[] = tree;
+let result: string[] | string;
+
+export function command(input: string) {
+    if (input.trim().startsWith("cd")) {
+        cdCommand(input);
+        return;
+    } else if (input.trim().toLowerCase() === "ls") {
+        lsCommand();
+        return result;
+    } else if (input.trim().toLowerCase() === "pwd") {
+        pwdCommand();
+        return result;
+    } else if (input.trim().toLowerCase() === "clear") {
+        clearCommand();
+        return result;
+    } else if (input.trim().toLowerCase() === "tree") {
+        treeCommand();
+        return result;
+    }
+
+    return `bash: ${input}: command not found`;
+}
 
 function getPathArray(path: string): string[] {
     return path.split("/").filter(Boolean);
@@ -23,71 +45,69 @@ function resolvePath(path: string): [TreeDirectory | null, string] {
     return [dir, ""];
 }
 
-function command(input: string) {
-    if (input.trim().startsWith("cd")) {
-        cdCommand(input);
-    } else if (input.trim().toLowerCase() === "ls") {
-        lsCommand();
-    } else if (input.trim().toLowerCase() === "pwd") {
-        pwdCommand();
-    } else if (input.trim().toLowerCase() === "clear") {
-        clearCommand();
-    } else if (input.trim().toLowerCase() === "tree") {
-        treeCommand();
-    }
-}
-
-//! Finish Command
+//! Need to Fix complex paths ex.: "cd pc/Program\ Files/../Users/Default"
 function cdCommand(path: string) {
     const cleanPath = path.substring(3, path.length);
 
     if (path.trim() === "cd") {
-        currentPath = "~";
+        const newDirectory = resolvePath("/pc/Users/Default");
 
-        console.log(currentPath);
-        return "~";
+        if (typeof newDirectory === "object" && newDirectory) {
+            currentPath = "~";
+            currentDirectory = newDirectory[0] as TreeDirectory;
+        }
     } else if (cleanPath.split("/").join("").trim() === ".." && currentPath !== "/") {
         const directories = getPathArray(currentPath);
         directories.pop();
         currentPath = `/${directories.join("/")}`;
         currentDirectory = resolvePath(currentPath)[0] as TreeDirectory;
+    } else if (cleanPath.split("/").join("").trim() === ".." && currentPath === "/") {
+        currentPath = "/";
+        currentDirectory = tree["/"];
     } else {
-        // const splitPath = getPathArray(cleanPath);
         const [newDirectory, error] = resolvePath(cleanPath);
 
-        if (cleanPath.split("/").join("").trim() === "..") {
-            console.log()
-        }
-        if (error) {
-            return "error";
-        } else if (typeof newDirectory === "object" && newDirectory) {
+        if (typeof newDirectory === "object" && newDirectory) {
+            currentPath = `/${getPathArray(cleanPath).join("/")}`;
             currentDirectory = newDirectory;
+        } else if (error) {
+            return "error";
         }
     }
 }
 
-//! Fix Command
 function lsCommand() {
-    const cleanPath = currentPath.split("/").filter(Boolean).join("/");
+    const pathParts = getPathArray(currentPath);
 
-    if (typeof directories[cleanPath] === "object") {
-        return Object.values(directories[cleanPath]).join("    ");
+    for (let i = 0; i < pathParts.length; i++) {
+        if (typeof currentDirectory === "string" || Array.isArray(currentDirectory)) {
+            return;
+        }
+        // currentDirectory = currentDirectory[pathParts[i]];
+    }
+
+    if (Array.isArray(currentDirectory)) {
+        result = currentDirectory.join("    ");
+        return;
     } else {
-        return "";
+        result = Object.keys(currentDirectory).join("    ");
+        return;
     }
 }
 
 function pwdCommand() {
-    return currentPath;
+    result = currentPath;
+    return;
 }
 
-//! Clean the console
 function clearCommand() {
-    return "clear";
+    result = "clear";
+    return;
 }
 
 function treeCommand() {
-    return JSON.stringify(tree, null, 2);
+    result = JSON.stringify(tree, null, 2);
+    return;
 }
 
 
@@ -103,19 +123,30 @@ function treeCommand() {
 
 // command("ls");     // Expected output: bash.exe    bin
 
-// command("cd pc");  // Change directory to /pc
+// command("cd pc");  // Expected Path: /pc
 
 // command("pwd");    // Expected output: /pc
 
 // command("ls");     // Expected output: Users    Program Files
 
-// command("cd Users/Default/Applications");
+// command("cd Users/Default/Applications");    // Expected Path: /pc/Users/Default/Applications
 
 // command("ls");     // Expected output: Browser    Clock    File Manager    Github    Settings    Terminal    Text Editor
 
 // command("pwd");    // Expected output: /pc/Users/Default/Applications
 
-// command("cd ..");
+// command("cd ..");    Expected Path: /pc/Users/Default
+
 // command("pwd");    // Expected output: /pc/Users/Default
+
+// command("cd ../../Program\ Files");    Expected Path: /pc/Program Files
+
+// command("cd ../../../");    Expected Path: /
+
+// command("pwd");    // Expected output: /
+
+// command("cd ~");    Expected Path: /pc/Users/Default
+
+// command("cd /pc/Program\ Files/Browser");    Expected Path: /pc/Program Files/Browser
 
 // command("clear");  // Clears the terminal

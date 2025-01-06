@@ -1,8 +1,4 @@
-export type { Directories, TreeDirectory };
-
-interface Directories {
-    [key: string]: string[];
-}
+export type { TreeDirectory };
 
 interface TreeDirectory {
     [key: string]: TreeDirectory | string[] | string

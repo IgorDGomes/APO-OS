@@ -17,7 +17,7 @@ export function ExtensionsTab() {
     useState(false);
 
   return (
-    <div className="w-48 border-r border-white/10 flex flex-col">
+    <div className="w-48 border-r border-white/10 flex flex-col bg-[rgb(34,34,37)]">
       <div className="flex justify-between items-center px-3 h-8">
         <span className="text-[0.7rem] font-light uppercase tracking-tighter text-white/80 pl-2">
           Search

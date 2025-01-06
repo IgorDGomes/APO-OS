@@ -1,40 +1,4 @@
-import { Directories, TreeDirectory } from "@/types/commandsType"
-
-export const directories: Directories = {
-    "~": ["Documents", "Desktop", "Downloads", "Pinned", "Applications"],
-    "/": ["bash.exe", "bin"],
-    "bin": [""],
-    "pc": ["Users", "Program Files"],
-    "pc/Users": ["Default"],
-    "pc/Users/Default": [
-        "Documents",
-        "Desktop",
-        "Downloads",
-        "Pinned",
-        "Applications"
-    ],
-    "pc/Users/Default/Applications": [
-        "Browser",
-        "Clock",
-        "File Manager",
-        "Github",
-        "Settings",
-        "Terminal",
-        "Text Editor"
-    ],
-    "pc/Users/Default/Desktop": [""],
-    "pc/Users/Default/Documents": ["Musics", "Pictures", "Videos"],
-    "pc/Users/Default/Documents/Musics": [""],
-    "pc/Users/Default/Documents/Pictures": [""],
-    "pc/Users/Default/Documents/Videos": [""],
-    "pc/Users/Default/Downloads": [""],
-    "pc/Users/Default/Pinned": ["Browser", "Clock", "Github", "Text Editor"],
-    "pc/Program Files": ["Browser", "Github", "Text Editor"],
-    "pc/Program Files/Browser": ["Application"],
-    "pc/Program Files/Browser/Application": ["browser.exe"],
-    "pc/Program Files/Github": ["https://github.com/IgorDGomes.html"],
-    "pc/Program Files/Text Editor": ["textEditor.exe"],
-}
+import { TreeDirectory } from "@/types/commandsType"
 
 export const tree: TreeDirectory = {
     "/": {
