@@ -34,6 +34,7 @@ import { Browser } from "./_tabs/browser";
 import { Clock } from "./_tabs/clock";
 import TextEditor from "./_tabs/textEditor";
 import { OpenSettings } from "./_components/settingsTab/checkOS";
+import { ApplicationsDropdown } from "./_shortcuts/applications/dropdown";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -87,7 +88,7 @@ export default async function Home() {
         <div className="w-full">
           <div className="min-h-8 h-[5%] w-full bg-background/20 backdrop-blur flex items-center justify-between">
             <div className="flex justify-around w-[20%]">
-              <button className="text-white">Applications</button>
+              <ApplicationsDropdown />
               <button className="text-white">Pinned</button>
             </div>
             <div className="flex min-w-80 w-[20%] max-w-80 justify-evenly">
