@@ -7,12 +7,14 @@ interface ButtonProps {
   className?: string;
   children: ReactNode;
   content?: ReactNode;
+  action?: () => void;
 }
 
 export function Shortcut({
   className,
   children,
   content,
+  action,
 }: ButtonProps): ReactNode {
   const [showPortal, setShowPortal] = useState(false);
 
@@ -32,12 +34,20 @@ export function Shortcut({
 
   return (
     <>
-      <button className={className} onClick={handleClick}>
+      <button
+        className={className}
+        onClick={() => {
+          handleClick();
+          if (action) {
+            action();
+          }
+        }}
+      >
         {children}
       </button>
       {showPortal && content
         ? createPortal(
-            <div className="absolute min-w-[700px] w-[60%] h-[80%] rounded-lg overflow-hidden">
+            <div className="absolute min-w-[700px] w-[60%] h-[80%] rounded-lg overflow-hidden dropdown">
               {content}
             </div>,
             desktop

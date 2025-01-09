@@ -62,14 +62,14 @@ export function Button({
       >
         {children}
       </button>
-      {showPortal && content
-        ? createPortal(
-            <div className="absolute min-w-[700px] w-[60%] h-[80%] rounded-lg overflow-hidden">
-              {content}
-            </div>,
-            desktop
-          )
-        : null}
+      {showPortal &&
+        content &&
+        createPortal(
+          <div className="absolute min-w-[700px] w-[60%] h-[80%] rounded-lg overflow-hidden z-50">
+            {content}
+          </div>,
+          desktop
+        )}
     </>
   );
 }
