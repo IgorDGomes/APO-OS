@@ -76,7 +76,7 @@ export function ApplicationsDropdown() {
       </button>
       {openTab &&
         createPortal(
-          <div className="absolute bg-white/10 backdrop-blur-sm z-50 top-0 left-0 rounded-sm border border-white/20">
+          <div className="absolute bg-white/5 backdrop-blur-sm z-50 top-0 left-0 rounded-sm border border-white/20">
             <ul className="min-w-[200px]">
               {applications.map((app, index) => {
                 return (
