@@ -10,6 +10,7 @@ interface ButtonProps {
   children: ReactNode;
   content?: ReactNode;
   action?: () => void;
+  testId: string;
 }
 
 export function Button({
@@ -18,13 +19,17 @@ export function Button({
   children,
   content,
   action,
+  testId,
 }: ButtonProps): ReactNode {
   const [showPortal, setShowPortal] = useState(false);
   const [active, setActive] = useState(false);
 
   if (typeof window === "undefined") {
     return (
-      <button className="flex items-center justify-center hover:bg-white/20 p-2 rounded-md">
+      <button
+        className="flex items-center justify-center hover:bg-white/20 p-2 rounded-md"
+        data-testid={testId}
+      >
         {children}
       </button>
     );
@@ -59,6 +64,7 @@ export function Button({
               )
         }
         onClick={handleClick}
+        data-testid={testId}
       >
         {children}
       </button>

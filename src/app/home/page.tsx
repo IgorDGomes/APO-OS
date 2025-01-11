@@ -51,19 +51,19 @@ export default async function Home() {
         {/*! Change size of icons, when its a smaller screen */}
         <div className="h-full w-20 bg-white/10">
           <div className="h-[90%] flex flex-col items-center justify-center">
-            <Button content={<Terminal />}>
+            <Button content={<Terminal />} testId="terminal">
               <SquareTerminalIcon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />
-            <Button content={<FileManager />}>
+            <Button content={<FileManager />} testId="fileManager">
               <FolderIcon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />
-            <Button content={<Browser />}>
+            <Button content={<Browser />} testId="browser">
               <EarthIcon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />
-            <Button content={<TextEditor />}>
+            <Button content={<TextEditor />} testId="textEditor">
               <FileCode2Icon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
             <Separator className="my-2" />
@@ -75,7 +75,7 @@ export default async function Home() {
               <GithubIcon className="size-9 stroke-[1.5]" />
             </Link>
             <Separator className="my-2" />
-            <Button content={<Clock />}>
+            <Button content={<Clock />} testId="clock">
               <AlarmClockIcon className="stroke-white size-9 stroke-[1.5]" />
             </Button>
           </div>
@@ -120,6 +120,7 @@ export default async function Home() {
                       <Button
                         action={deleteCookies}
                         className="rounded-lg py-2 px-4 border hover:bg-red-600/90 hover:text-white font-medium flex-1"
+                        testId="deleteCookies"
                       >
                         Yes
                       </Button>
