@@ -16,13 +16,16 @@ export async function POST(req: Request) {
                 path: "/",
                 domain: "apo-os.vercel.app",
             });
-            cookieStore.set("desktop_id", uuid, {
-                maxAge: 365 * 24 * 60 * 60,
-                secure: true,
-                httpOnly: true,
-                path: "/",
-                domain: "apo-os.vercel.app",
-            });
+
+            if (!cookieStore.has("desktop_id")) {
+                cookieStore.set("desktop_id", uuid, {
+                    maxAge: 365 * 24 * 60 * 60,
+                    secure: true,
+                    httpOnly: true,
+                    path: "/",
+                    domain: "apo-os.vercel.app",
+                });
+            }
 
             return Response.redirect("https://apo-os.vercel.app/home");
         }

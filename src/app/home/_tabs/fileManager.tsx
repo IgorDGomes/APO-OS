@@ -4,6 +4,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
+  FileIcon,
   FolderIcon,
   HouseIcon,
   MinusIcon,
@@ -16,11 +17,54 @@ export function FileManager() {
   const [user, setUser] = useState("");
   const [path, setPath] = useState("/pc/");
   const [fileQuantity, setFileQuantity] = useState(0);
+  const files = [
+    { name: "Project Proposal.pdf", folder: false },
+    { name: "Design Mockups", folder: true },
+    { name: "Meeting Notes.docx", folder: false },
+    { name: "Development", folder: true },
+    { name: "Budget.xlsx", folder: false },
+    { name: "Marketing", folder: true },
+    { name: "Client Feedback.txt", folder: false },
+    { name: "Sales Data", folder: true },
+    { name: "User Research.pdf", folder: false },
+    { name: "Wireframes", folder: true },
+    { name: "Sprint Planning.docx", folder: false },
+    { name: "QA Reports", folder: true },
+    { name: "Roadmap.pptx", folder: false },
+    { name: "HR Policies", folder: true },
+    { name: "Onboarding Guide.pdf", folder: false },
+    { name: "Legal", folder: true },
+    { name: "Terms and Conditions.docx", folder: false },
+    { name: "Privacy Policy.pdf", folder: false },
+    { name: "Invoices", folder: true },
+    { name: "2023 Invoice.xlsx", folder: false },
+    { name: "Reports", folder: true },
+    { name: "Annual Report 2023.pdf", folder: false },
+    { name: "Performance Metrics.docx", folder: false },
+    { name: "Engineering", folder: true },
+    { name: "API Documentation.pdf", folder: false },
+    { name: "Code Review", folder: true },
+    { name: "Testing Checklist.xlsx", folder: false },
+    { name: "Design Assets", folder: true },
+    { name: "Brand Guidelines.pdf", folder: false },
+    { name: "Social Media", folder: true },
+    { name: "Post Schedule.xlsx", folder: false },
+    { name: "Campaigns", folder: true },
+    { name: "Ad Creatives", folder: true },
+    { name: "Video Scripts.docx", folder: false },
+    { name: "HR", folder: true },
+    { name: "Employee Handbook.pdf", folder: false },
+    { name: "Payroll", folder: true },
+    { name: "Timesheets.xlsx", folder: false },
+    { name: "IT", folder: true },
+    { name: "System Logs.txt", folder: false },
+    { name: "Employee Passwords.xlsx", folder: false },
+  ];
 
   useEffect(() => {
     setUser("somebody");
-    setFileQuantity(3);
-  }, []);
+    setFileQuantity(files.length);
+  }, [files.length]);
 
   return (
     <div className="h-full">
@@ -95,57 +139,32 @@ export function FileManager() {
         </div>
       </header>
 
-      <div className="h-[calc(100%-32px-44px-40px)] bg-[#EFEFEF] grid grid-cols-4 min-h-0">
-        <div className="col-span-1 border-r-2 border-black/10"></div>
-        <div className="col-span-3 flex flex-col min-h-0">
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
-          <div className="grid grid-cols-5 grid-rows-5 w-full flex-1">
-            {/* First row */}
-            <div className="bg-red-700/20"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-orange-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-gray-700/20"></div>
-            {/* Second row */}
-            <div className="bg-gray-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-orange-700/50"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-red-700/20"></div>
-            {/* Third row */}
-            <div className="bg-red-700/20"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-orange-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-gray-700/20"></div>
-            {/* Fourth row */}
-            <div className="bg-gray-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-orange-700/50"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-red-700/20"></div>
-            {/* Fifth row */}
-            <div className="bg-red-700/20"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-orange-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-gray-700/20"></div>
-            {/* Sixth row */}
-            <div className="bg-gray-700/20"></div>
-            <div className="bg-blue-700/20"></div>
-            <div className="bg-orange-700/50"></div>
-            <div className="bg-green-700/20"></div>
-            <div className="bg-red-700/20"></div>
+      <div className="h-[calc(100%-32px-44px-40px)] bg-[#EFEFEF] flex">
+        <div className="border-r-2 border-black/10 w-52"></div>
+        <div className="relative flex-1 flex flex-col overflow-auto">
+          <div className="grid grid-cols-4 self-center gap-x-4 gap-y-2 py-4">
+            {files
+              .sort((a, b) =>
+                a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+              )
+              .map((file, index) => {
+                return (
+                  <button
+                    key={index}
+                    className="size-32 flex flex-col gap-2 items-center justify-center hover:bg-black/5 rounded-md"
+                  >
+                    {file.folder ? (
+                      <FolderIcon className="size-[50%] stroke-1" />
+                    ) : (
+                      <FileIcon className="size-[50%] stroke-1" />
+                    )}
+                    <h3 className="text-sm text-center px-2">{file.name}</h3>
+                  </button>
+                );
+              })}
           </div>
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
-          {/* FIX SCROLL NOT WORKING */}
 
-          <div className="w-full h-6 bg-[#DDDDDD] flex items-center pl-4">
+          <div className="sticky bottom-0 w-full h-6 bg-[#DDDDDD] flex items-center pl-4">
             {fileQuantity > 1 ? (
               <span className="text-sm">{fileQuantity} | items</span>
             ) : (
