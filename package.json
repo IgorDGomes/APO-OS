@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "npx playwright test",
-    "t": "npx playwright test --ui"
+    "test": "playwright test",
+    "t": "playwright test --ui"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",

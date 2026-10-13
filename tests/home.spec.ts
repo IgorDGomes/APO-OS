@@ -1,9 +1,7 @@
 import { test, expect } from '@playwright/test';
 
-test.describe.configure({ retries: 2 });
-
 test.beforeEach(async ({ page }) => {
-    await page.goto('https://apo-os.vercel.app/');
+    await page.goto('/');
     const username = page.getByPlaceholder("Username");
 
     await username.fill("admin");
