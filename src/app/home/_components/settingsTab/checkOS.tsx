@@ -1,19 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 export function OpenSettings({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [os, setOS] = useState<string | null>(null);
-
-  useEffect(() => {
-    setOS(getUserOS());
-  }, []);
-
   function handleClick() {
+    const os = getUserOS();
+
     if (os === "Windows") {
       window.location.href = "ms-settings:";
     } else if (os === "macOS") {
@@ -41,8 +35,12 @@ function getUserOS(): string {
   const userAgent = navigator.userAgent.toLowerCase();
 
   if (userAgent.includes("windows")) return "Windows";
-  if (userAgent.includes("mac os")) return "macOS";
-  if (userAgent.includes("linux")) return "Linux";
+  if (userAgent.includes("mac os") || userAgent.includes("macintosh")) {
+    return "macOS";
+  }
+  if (userAgent.includes("linux") && !userAgent.includes("android")) {
+    return "Linux";
+  }
 
   return "Unknown";
 }

@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "test": "npx playwright test",
-    "t": "npx playwright test --ui"
+    "lint": "eslint .",
+    "test": "playwright test",
+    "t": "playwright test --ui"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.2",
@@ -27,11 +27,11 @@
   "devDependencies": {
     "@playwright/test": "^1.48.2",
     "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^26",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^8",
-    "eslint-config-next": "15.0.2",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.0",
     "postcss": "^8",
     "tailwindcss": "^4",
     "typescript": "~5.9.3"
