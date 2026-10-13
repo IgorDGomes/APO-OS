@@ -11,52 +11,76 @@ import { twMerge } from "tailwind-merge";
 type HourType = { className?: string };
 
 export function HourMinute() {
-  const [timeTrigger, setTimeTrigger] = useState(Date.now());
+  const [timeTrigger, setTimeTrigger] = useState<number | null>(null);
 
   useEffect(() => {
+    const updateTime = () => setTimeTrigger(Date.now());
+
+    updateTime();
+
     const now = new Date();
     const msUntilNextMinute =
       (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
 
     const timeout = setTimeout(() => {
-      setTimeTrigger(Date.now());
+      updateTime();
 
-      const interval = setInterval(() => {
-        setTimeTrigger(Date.now());
-      }, 60000);
+      const interval = setInterval(updateTime, 60_000);
 
-      return () => clearInterval(interval);
+      // Store the interval ID so it can be cleaned up.
+      intervalId = interval;
     }, msUntilNextMinute);
 
-    return () => clearTimeout(timeout);
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
+    return () => {
+      clearTimeout(timeout);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, []);
+
+  if (timeTrigger === null) {
+    return <p className="font-medium text-white">--:--</p>;
+  }
 
   const date = new Date(timeTrigger);
   const hour = hourCorrection(date.getHours());
   const minute = minuteCorrection(date.getMinutes());
 
-  return <p className={"font-medium text-white"}>{`${hour}:${minute}`}</p>;
+  return <p className="font-medium text-white">{`${hour}:${minute}`}</p>;
 }
 
 export function HourMinuteSecond({ className }: HourType) {
-  const [timeTrigger, setTimeTrigger] = useState(Date.now());
+  const [timeTrigger, setTimeTrigger] = useState<number | null>(null);
 
   useEffect(() => {
+    const updateTime = () => setTimeTrigger(Date.now());
+
+    updateTime();
+
     const now = new Date();
     const msUntilNextSecond = 1000 - now.getMilliseconds();
 
     const timeout = setTimeout(() => {
-      setTimeTrigger(Date.now());
+      updateTime();
 
-      const interval = setInterval(() => {
-        setTimeTrigger(Date.now());
-      }, 1000);
-
-      return () => clearInterval(interval);
+      const interval = setInterval(updateTime, 1000);
+      intervalId = interval;
     }, msUntilNextSecond);
 
-    return () => clearTimeout(timeout);
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
+    return () => {
+      clearTimeout(timeout);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, []);
+
+  if (timeTrigger === null) {
+    return (
+      <p className={twMerge("font-medium text-white", className)}>--:--:--</p>
+    );
+  }
 
   const date = new Date(timeTrigger);
   const hour = hourCorrection(date.getHours());
@@ -64,8 +88,8 @@ export function HourMinuteSecond({ className }: HourType) {
   const second = secondCorretion(date.getSeconds());
 
   return (
-    <p
-      className={twMerge("font-medium text-white" + className)}
-    >{`${hour}:${minute}:${second}`}</p>
+    <p className={twMerge("font-medium text-white", className)}>
+      {`${hour}:${minute}:${second}`}
+    </p>
   );
 }

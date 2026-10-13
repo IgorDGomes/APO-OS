@@ -14,9 +14,9 @@ import {
 import { useEffect, useState } from "react";
 
 export function FileManager() {
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [path, setPath] = useState("/pc/");
-  const [fileQuantity, setFileQuantity] = useState(0);
+  // const [fileQuantity, setFileQuantity] = useState(0);
   const files = [
     { name: "Project Proposal.pdf", folder: false },
     { name: "Design Mockups", folder: true },
@@ -61,9 +61,12 @@ export function FileManager() {
     { name: "Employee Passwords.xlsx", folder: false },
   ];
 
+  const fileQuantity = files.length;
+  const user = "somebody";
+
   useEffect(() => {
-    setUser("somebody");
-    setFileQuantity(files.length);
+    // setUser("somebody");
+    // setFileQuantity(files.length);
   }, [files.length]);
 
   return (
@@ -124,7 +127,7 @@ export function FileManager() {
             onSubmit={(i) => i.preventDefault()}
           >
             <div className="flex items-center bg-white h-[85%] w-full rounded-sm overflow-hidden">
-              <button className="px-2 border-r-[1px] border-black/20">
+              <button className="px-2 border-r border-black/20">
                 <FolderIcon className="size-7" />
               </button>
               <input
