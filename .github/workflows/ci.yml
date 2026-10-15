@@ -5,17 +5,26 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playwright-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  continuous-integration:
+  build:
+    name: Build application
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
@@ -29,16 +38,65 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox
+      - name: Upload Next.js build
+        uses: actions/upload-artifact@v7
+        with:
+          name: next-build
+          path: .next/
+          include-hidden-files: true
+          retention-days: 1
+
+  playwright:
+    name: Test on ${{ matrix.browser }}
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download Next.js build
+        uses: actions/download-artifact@v8
+        with:
+          name: next-build
+          path: .next/
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run Playwright tests
-        run: npm run test
+        run: npm run test -- --project=${{ matrix.browser }}
+        timeout-minutes: 10
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: playwright-report/
+          if-no-files-found: ignore
+          retention-days: 2
+
+      - name: Upload test results and traces
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-results-${{ matrix.browser }}
+          path: test-results/
+          if-no-files-found: ignore
           retention-days: 2
