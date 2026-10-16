@@ -1,6 +1,29 @@
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
+    page.on("requestfailed", request => {
+        console.log(
+            "[Request failed]",
+            request.method(),
+            request.url(),
+            request.failure()?.errorText
+        );
+    });
+
+    page.on('response', response => {
+        if (response.status() >= 400) {
+        console.log(
+            '[HTTP error]',
+            response.status(),
+            response.url()
+        );
+        }
+    });
+
+    page.on('pageerror', error => {
+        console.log('[Page error]', error.message);
+    });
+
     await page.goto('/');
     const username = page.getByPlaceholder("Username");
 
@@ -8,6 +31,8 @@ test.beforeEach(async ({ page }) => {
     await username.press("Enter");
 
     const password = page.getByPlaceholder("Password");
+
+    await expect(password).toBeVisible();
 
     await password.fill("12345");
     await password.press("Enter");

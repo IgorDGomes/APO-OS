@@ -19,7 +19,7 @@ test.describe("Login Page", () => {
     await expect(page).toHaveURL("http://127.0.0.1:3000/home");
   });
 
-  test("should redirect authenticated userd to home", async ({ page }) => {
+  test("should redirect authenticated user to home", async ({ page }) => {
     const username = page.getByPlaceholder("Username");
   
     await username.fill("admin");
