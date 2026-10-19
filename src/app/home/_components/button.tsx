@@ -40,12 +40,9 @@ export function Button({
   function handleClick() {
     if (action) {
       action();
-    } else if (showPortal === false) {
-      setActive(true);
-      setShowPortal(true);
     } else {
-      setActive(false);
-      setShowPortal(false);
+      setActive(showPortal === false);
+      setShowPortal(showPortal === false);
     }
   }
 
