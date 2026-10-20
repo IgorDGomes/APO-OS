@@ -50,4 +50,15 @@ function millisecondCorretion(millisecond: number): string | number {
   return fixedMillisecond
 }
 
-export { hourCorrection, minuteCorrection, secondCorretion, millisecondCorretion };
+function formatTime(totalSeconds: number): string {
+  const safeSeconds = Math.max(0, totalSeconds);
+  const hours = Math.floor(safeSeconds / 3600);
+  const minutes = Math.floor((safeSeconds % 3600) / 60);
+  const seconds = safeSeconds % 60;
+
+  return [hours, minutes, seconds]
+    .map((value) => String(value).padStart(2, "0"))
+    .join(":");
+}
+
+export { hourCorrection, minuteCorrection, secondCorretion, millisecondCorretion, formatTime };

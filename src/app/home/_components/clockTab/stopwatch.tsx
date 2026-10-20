@@ -1,69 +1,151 @@
 "use client";
 
-import { PlayIcon, RotateCwIcon, TimerIcon } from "lucide-react";
-import { useState } from "react";
+import { StopwatchData } from "@/types/clock.type";
+import {
+  PlayIcon,
+  PauseIcon,
+  RotateCwIcon,
+  TimerIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
 
-export function StopwatchTab() {
-  const [stopwatch, setStopwatch] = useState("00:00.001");
+interface StopwatchTabProps {
+  stopwatch: StopwatchData;
+  onStart: () => void;
+  onPause: () => void;
+  onReset: () => void;
+  onLap: () => void;
+}
 
-  const data = JSON.parse(window.localStorage.getItem("clock") || "{}");
-  const stopwatchRecord = data.inUse?.stopwatch;
+function formatTime(milliseconds: number): string {
+  const totalMilliseconds = Math.max(0, milliseconds);
+  const hours = Math.floor(totalMilliseconds / 3_600_000);
+  const minutes = Math.floor((totalMilliseconds % 3_600_000) / 60_000);
+  const seconds = Math.floor((totalMilliseconds % 60_000) / 1_000);
+  const ms = Math.floor(totalMilliseconds % 1_000);
 
-  function displayStopwatch() {
-    if (!stopwatchRecord) {
-      return;
-    }
+  const totalMinutes = hours * 60 + minutes;
 
-    return stopwatchRecord.stops.map((d: string, index: number) => {
-      return (
-        <div
-          className="flex mx-9 px-8 py-3 bg-white rounded-xl"
-          key={d + index}
-        >
-          <div className="w-full flex justify-between items-center gap-4">
-            <p className="font-semibold text-2xl">
-              {index < 10 ? "0" + (index + 1) : index}
-            </p>
-            <p>+00:01.00</p>
-            <p className="font-semibold text-2xl">{d}</p>
-          </div>
-        </div>
-      );
-    });
-  }
+  return `${String(totalMinutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
+}
+
+export function StopwatchTab({
+  stopwatch,
+  onStart,
+  onPause,
+  onReset,
+  onLap,
+}: StopwatchTabProps) {
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    if (!stopwatch.running) return;
+
+    const interval = window.setInterval(() => {
+      setNow(Date.now());
+    }, 50);
+
+    return () => window.clearInterval(interval);
+  }, [stopwatch.running]);
+
+  const elapsed =
+    stopwatch.elapsed +
+    (stopwatch.running && stopwatch.start !== null
+      ? Math.max(0, now - stopwatch.start)
+      : 0);
+
+  const hasStarted = stopwatch.elapsed > 0 || stopwatch.list.length > 0;
 
   return (
-    <>
-      <div className="relative h-full">
-        <div className="flex flex-col">
-          <div className="flex flex-col items-center py-10">
-            <span className="text-black text-5xl">{stopwatch}</span>
-            <span className="text-2xl">00:00.000</span>
-          </div>
-          <div className="flex flex-col gap-3 pb-[5%]">
-            {displayStopwatch()}
-          </div>
-        </div>
-        <div className="sticky flex items-center justify-center gap-10 w-full bottom-0 pb-12">
-          <button
-            className="flex items-center justify-center p-3 rounded-full bg-white hover:bg-[#888888] hover:text-white transition-colors text-lg shadow-lg"
-            onClick={() => setStopwatch("00:00.000")}
-          >
-            <RotateCwIcon />
-          </button>
-          <button
-            className="flex items-center justify-center p-4 rounded-full bg-white hover:bg-[#888888] hover:text-white transition-colors text-lg shadow-lg"
-            onClick={() => {
-              setStopwatch("00:00.001");
-            }}
-          >
-            <PlayIcon />
-          </button>
-          <button className="flex items-center justify-center p-3 rounded-full bg-white hover:bg-[#888888] hover:text-white transition-colors text-lg shadow-lg">
-            <TimerIcon />
-          </button>
-        </div>
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      {/* Fixed stopwatch display */}
+      <div className="flex shrink-0 flex-col items-center py-8">
+        <span className="text-5xl font-medium tabular-nums text-black">
+          {formatTime(elapsed)}
+        </span>
+
+        <span className="mt-2 text-sm text-gray-500">
+          {stopwatch.running
+            ? "Running"
+            : hasStarted
+              ? "Paused"
+              : "Ready"}
+        </span>
       </div>
-    </>
+
+      {/* Scrollable lap list */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-4">
+        {stopwatch.list.length === 0 ? (
+          <div className="flex h-full min-h-24 items-center justify-center">
+            <p className="text-sm text-gray-400">
+              Start the stopwatch and tap Mark to record laps.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {[...stopwatch.list].reverse().map((lap, index) => {
+              const lapNumber = stopwatch.list.length - index;
+
+              return (
+                <div
+                  className="flex shrink-0 items-center rounded-xl bg-white px-5 py-4 shadow-sm"
+                  key={`${lap.mark}-${lapNumber}`}
+                >
+                  <div className="flex w-full items-center justify-between gap-3">
+                    <p className="text-lg font-semibold tabular-nums text-gray-800">
+                      Lap {String(lapNumber).padStart(2, "0")}
+                    </p>
+
+                    <p className="text-sm tabular-nums text-gray-500">
+                      +{formatTime(lap.difference)}
+                    </p>
+
+                    <p className="text-lg font-semibold tabular-nums text-gray-900">
+                      {formatTime(lap.mark)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* Fixed controls */}
+      <div className="flex shrink-0 items-center justify-center gap-10 border-t border-gray-200 bg-gray-100 px-4 pb-8 pt-5">
+        <button
+          type="button"
+          aria-label="Reset stopwatch"
+          disabled={!hasStarted && elapsed === 0}
+          className="flex items-center justify-center rounded-full bg-white p-3 text-gray-800 shadow-md transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
+          onClick={onReset}
+        >
+          <RotateCwIcon size={22} />
+        </button>
+
+        <button
+          type="button"
+          aria-label={stopwatch.running ? "Pause stopwatch" : "Start stopwatch"}
+          className="flex items-center justify-center rounded-full bg-white p-4 text-gray-800 shadow-md transition-colors hover:bg-gray-200"
+          onClick={stopwatch.running ? onPause : onStart}
+        >
+          {stopwatch.running ? (
+            <PauseIcon size={28} />
+          ) : (
+            <PlayIcon size={28} />
+          )}
+        </button>
+
+        <button
+          type="button"
+          aria-label="Mark lap"
+          disabled={!stopwatch.running}
+          className="flex items-center justify-center rounded-full bg-white p-3 text-gray-800 shadow-md transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
+          onClick={onLap}
+        >
+          <TimerIcon size={22} />
+        </button>
+      </div>
+    </div>
   );
 }
