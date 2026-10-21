@@ -1,4 +1,4 @@
-import { TreeDirectory } from "@/types/commandsType"
+import { TreeDirectory } from "@/types/commands.type"
 
 export const tree: TreeDirectory = {
     "/": {
