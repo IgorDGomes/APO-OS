@@ -105,6 +105,13 @@ export function TimerTab({
     updateDuration(hours, minutes, nextSeconds);
   }
 
+  const handleStart = () => {
+    const startedAt = Date.now();
+
+    setNow(startedAt);
+    onStart(startedAt);
+  };
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
       {/* Timer display */}
@@ -188,7 +195,7 @@ export function TimerTab({
           type="button"
           aria-label={isRunning ? "Pause timer" : "Start timer"}
           disabled={!isRunning && timer.duration <= 0}
-          onClick={isRunning ? onPause : onStart}
+          onClick={isRunning ? onPause : handleStart}
           className="flex items-center justify-center rounded-full bg-white p-4 text-gray-800 shadow-md transition-colors hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {isRunning ? (

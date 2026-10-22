@@ -275,7 +275,7 @@ export function useClock() {
     });
   }, []);
 
-  const startTimer = useCallback(() => {
+  const startTimer = useCallback((startedAt: number) => {
     setClock((previous) => {
       if (previous.timer.running) return previous;
 
@@ -292,7 +292,7 @@ export function useClock() {
           ...previous.timer,
           remaining,
           running: true,
-          endAt: Date.now() + remaining * 1000,
+          endAt: startedAt + remaining * 1000,
         },
       };
     });
