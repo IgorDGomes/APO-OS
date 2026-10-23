@@ -1,14 +1,16 @@
-
 "use client";
 
-import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 
+import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
+
+import { useClock } from "@/hooks/useClock";
+
+import { Modes } from "@/types/clock.type";
+
+import { TimerTab } from "../_components/clockTab/timer";
 import { AlarmTab } from "../_components/clockTab/alarm";
 import { StopwatchTab } from "../_components/clockTab/stopwatch";
-import { TimerTab } from "../_components/clockTab/timer";
-import { useClock } from "@/hooks/useClock";
-import { Modes } from "@/types/clock.type";
 
 export function Clock() {
   const [activeMode, setActiveMode] = useState<Modes>("alarm");

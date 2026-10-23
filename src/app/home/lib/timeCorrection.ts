@@ -1,56 +1,20 @@
-function hourCorrection(hour: number): string | number {
-  let fixedHour;
-
-  if (hour < 10) {
-    fixedHour = "0" + hour;
-  } else {
-    return hour;
-  }
-
-  return fixedHour;
+function hourCorrection(hour: number): string {
+  return String(hour).padStart(2, "0");
 }
 
-function minuteCorrection(minute: number): string | number {
-  let fixedMinute;
-
-  if (minute < 10) {
-    fixedMinute = "0" + minute;
-  } else {
-    return minute;
-  }
-
-  return fixedMinute;
+function minuteCorrection(minute: number): string {
+  return String(minute).padStart(2, "0");
 }
 
-function secondCorretion(second: number): string | number {
-  let fixedSecond;
-
-  if (second < 10) {
-    fixedSecond = "0" + second;
-  } else {
-    return second
-  }
-
-  return fixedSecond
+function secondCorretion(second: number): string {
+  return String(second).padStart(2, "0");
 }
 
-function millisecondCorretion(millisecond: number): string | number {
-  let fixedMillisecond: string | number;
-
-  if (millisecond < 100) {
-    fixedMillisecond = "0" + millisecond;
-
-    if (millisecond < 10) {
-      fixedMillisecond = "0" + fixedMillisecond;
-    }
-  } else {
-    return millisecond
-  }
-
-  return fixedMillisecond
+function millisecondCorretion(millisecond: number): string {
+  return String(millisecond).padStart(3, "0");
 }
 
-function formatTime(totalSeconds: number): string {
+function formatTimeFromSec(totalSeconds: number): string {
   const safeSeconds = Math.max(0, totalSeconds);
   const hours = Math.floor(safeSeconds / 3600);
   const minutes = Math.floor((safeSeconds % 3600) / 60);
@@ -61,4 +25,23 @@ function formatTime(totalSeconds: number): string {
     .join(":");
 }
 
-export { hourCorrection, minuteCorrection, secondCorretion, millisecondCorretion, formatTime };
+function formatTimeFromMs(milliseconds: number): string {
+  const totalMilliseconds = Math.max(0, milliseconds);
+  const hours = Math.floor(totalMilliseconds / 3_600_000);
+  const minutes = Math.floor((totalMilliseconds % 3_600_000) / 60_000);
+  const seconds = Math.floor((totalMilliseconds % 60_000) / 1_000);
+  const ms = Math.floor(totalMilliseconds % 1_000);
+
+  const totalMinutes = hours * 60 + minutes;
+
+  return `${minuteCorrection(totalMinutes)}:${secondCorretion(seconds)}.${millisecondCorretion(ms)}`;
+}
+
+export {
+  hourCorrection,
+  minuteCorrection,
+  secondCorretion,
+  millisecondCorretion,
+  formatTimeFromSec,
+  formatTimeFromMs
+};

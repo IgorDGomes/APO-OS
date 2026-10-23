@@ -57,6 +57,14 @@ interface StopwatchData {
   list: StopwatchLap[];
 }
 
+interface StopwatchTabProps {
+  stopwatch: StopwatchData;
+  onStart: () => void;
+  onPause: () => void;
+  onReset: () => void;
+  onLap: () => void;
+}
+
 // Timer
 
 interface TimerData {
@@ -86,6 +94,7 @@ export type {
 
   StopwatchLap,
   StopwatchData,
+  StopwatchTabProps,
 
   TimerData,
   TimerTabProps

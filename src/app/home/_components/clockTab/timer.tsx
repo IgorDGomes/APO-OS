@@ -1,13 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 import {
   PauseIcon,
   PlayIcon,
   RotateCwIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+
 import type { TimerTabProps } from "@/types/clock.type";
-import { formatTime } from "../../lib/timeCorrection";
+
+import { formatTimeFromSec } from "../../lib/timeCorrection";
 
 const MAX_DURATION = 24 * 60 * 60;
 
@@ -114,7 +117,6 @@ export function TimerTab({
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      {/* Timer display */}
       <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-4">
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-gray-500">
           {isRunning
@@ -125,10 +127,9 @@ export function TimerTab({
         </p>
 
         <div className="whitespace-nowrap text-5xl font-medium tabular-nums text-black sm:text-7xl">
-          {formatTime(remaining)}
+          {formatTimeFromSec(remaining)}
         </div>
 
-        {/* Duration inputs */}
         {!isRunning && (
           <div className="mt-8 flex items-center justify-center gap-2 sm:gap-4">
             <label className="flex flex-col items-center gap-2 text-sm text-gray-500">
@@ -180,7 +181,6 @@ export function TimerTab({
         )}
       </div>
 
-      {/* Fixed controls */}
       <div className="w-full flex items-center justify-center gap-10 border-t border-gray-200 bg-gray-100 pr-22 pb-8 pt-5">
         <button
           type="button"

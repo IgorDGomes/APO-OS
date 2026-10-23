@@ -261,7 +261,7 @@ function AlarmEditor({
 
       <div className="grid grid-cols-2 gap-3">
         <label className="flex flex-col gap-1 text-sm">
-          Hour (0–23)
+          Hour (0-23)
           <input
             type="number"
             min={0}
@@ -275,7 +275,7 @@ function AlarmEditor({
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
-          Minute (0–59)
+          Minute (0-59)
           <input
             type="number"
             min={0}
