@@ -1,28 +1,37 @@
+
+"use client";
+
+import { useCallback } from "react";
+
 export function useLocalStorage(key: string) {
-    function setItem(value: unknown) {
-        try {
-            window.localStorage.setItem(key, JSON.stringify(value))
-        } catch (error) {
-            console.error(error);
-        }
-    }
+  const setItem = useCallback(
+    (value: unknown) => {
+      try {
+        window.localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        console.error("Failed to save localStorage item:", error);
+      }
+    },
+    [key]
+  );
 
-    function getItem() {
-        try {
-            const item = window.localStorage.getItem(key)
-            return item ? JSON.parse(item) : undefined
-        } catch (error) {
-            console.error(error)
-        }
+  const getItem = useCallback(() => {
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : undefined;
+    } catch (error) {
+      console.error("Failed to read localStorage item:", error);
+      return undefined;
     }
+  }, [key]);
 
-    function removeItem() {
-        try {
-            window.localStorage.removeItem(key)
-        } catch (error) {
-            console.error(error)
-        }
+  const removeItem = useCallback(() => {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (error) {
+      console.error("Failed to remove localStorage item:", error);
     }
+  }, [key]);
 
-    return { setItem, getItem, removeItem }
+  return { setItem, getItem, removeItem };
 }

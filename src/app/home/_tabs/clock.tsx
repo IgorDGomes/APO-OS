@@ -1,49 +1,40 @@
 "use client";
 
-import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { useState } from "react";
+
+import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
+
+import { useClock } from "@/hooks/useClock";
+
+import { Modes } from "@/types/clock.type";
+
+import { TimerTab } from "../_components/clockTab/timer";
 import { AlarmTab } from "../_components/clockTab/alarm";
 import { StopwatchTab } from "../_components/clockTab/stopwatch";
-import { TimerTab } from "../_components/clockTab/timer";
 
 export function Clock() {
-  const [alarmActive, setAlarmActive] = useState(true);
-  const [stopwatchActive, setStopwatchActive] = useState(false);
-  const [timerActive, setTimerActive] = useState(false);
+  const [activeMode, setActiveMode] = useState<Modes>("alarm");
 
-  function isAlarmActive() {
-    if (alarmActive) {
-      return;
-    } else {
-      setAlarmActive(true);
-      setStopwatchActive(false);
-      setTimerActive(false);
-    }
-  }
-
-  function isStopwatchActive() {
-    if (stopwatchActive) {
-      return;
-    } else {
-      setStopwatchActive(true);
-      setAlarmActive(false);
-      setTimerActive(false);
-    }
-  }
-
-  function isTimerActive() {
-    if (timerActive) {
-      return;
-    } else {
-      setTimerActive(true);
-      setAlarmActive(false);
-      setStopwatchActive(false);
-    }
-  }
+  const {
+    clock,
+    addAlarm,
+    toggleAlarm,
+    updateAlarm,
+    deleteAlarm,
+    startStopwatch,
+    pauseStopwatch,
+    resetStopwatch,
+    addStopwatchLap,
+    setTimerDuration,
+    startTimer,
+    pauseTimer,
+    resetTimer,
+    finishTimer,
+  } = useClock();
 
   return (
-    <div className="h-full">
-      <header className="bg-[#BBBBBB]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-[#EFEFEF]">
+      <header>
         <div className="relative h-10 bg-[#888888] flex items-center justify-end text-white">
           <div className="absolute flex items-center justify-center w-full">
             <p className="text-sm tracking-wider">Clock</p>
@@ -63,36 +54,55 @@ export function Clock() {
             </button>
           </div>
         </div>
-        <div className="h-12 grid grid-cols-3">
-          <button
-            className={alarmActive ? "bg-[#DDDDDD]" : "hover:bg-[#DDDDDD]"}
-            onClick={isAlarmActive}
-          >
-            Alarm
-          </button>
-          <button
-            className={
-              stopwatchActive
-                ? "bg-[#DDDDDD] border-x-2 border-black"
-                : "hover:bg-[#DDDDDD] border-x-2 border-black"
-            }
-            onClick={isStopwatchActive}
-          >
-            Stopwatch
-          </button>
-          <button
-            className={timerActive ? "bg-[#DDDDDD]" : "hover:bg-[#DDDDDD]"}
-            onClick={isTimerActive}
-          >
-            Timer
-          </button>
-        </div>
       </header>
+      <nav className="flex items-center gap-1 rounded-xl bg-black/5 p-1 my-4 w-fit mx-auto">
+        {(["alarm", "stopwatch", "timer"] as Modes[]).map((mode) => (
+          <button
+            key={mode}
+            type="button"
+            onClick={() => setActiveMode(mode)}
+            className={`rounded-lg px-3 py-1.5 text-sm capitalize ${
+              activeMode === mode
+                ? "bg-white text-black shadow-sm"
+                : "text-black/60 hover:text-black"
+            }`}
+          >
+            {mode}
+          </button>
+        ))}
+      </nav>
 
-      <div className="h-[calc(100%-40px-48px)] bg-[#EFEFEF] overflow-y-auto">
-        {alarmActive && <AlarmTab />}
-        {stopwatchActive && <StopwatchTab />}
-        {timerActive && <TimerTab />}
+      <div className="flex-1 overflow-y-auto">
+        {activeMode === "alarm" && (
+          <AlarmTab
+            alarms={clock.alarm}
+            onAddAlarm={addAlarm}
+            onToggleAlarm={toggleAlarm}
+            onUpdateAlarm={updateAlarm}
+            onDeleteAlarm={deleteAlarm}
+          />
+        )}
+
+        {activeMode === "stopwatch" && (
+          <StopwatchTab 
+            stopwatch={clock.stopwatch}
+            onStart={startStopwatch}
+            onPause={pauseStopwatch}
+            onReset={resetStopwatch}
+            onLap={addStopwatchLap}
+          />
+        )}
+
+        {activeMode === "timer" && (
+          <TimerTab
+            timer={clock.timer}
+            onSetDuration={setTimerDuration}
+            onStart={startTimer}
+            onPause={pauseTimer}
+            onReset={resetTimer}
+            onFinish={finishTimer}
+          />
+        )}
       </div>
     </div>
   );
