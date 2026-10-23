@@ -1,4 +1,4 @@
-import { TreeDirectory } from "@/types/commandsType";
+import { TreeDirectory } from "@/types/commands.type";
 import { tree } from "./commands";
 
 let currentPath = "/";

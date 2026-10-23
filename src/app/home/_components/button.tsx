@@ -40,12 +40,9 @@ export function Button({
   function handleClick() {
     if (action) {
       action();
-    } else if (showPortal === false) {
-      setActive(true);
-      setShowPortal(true);
     } else {
-      setActive(false);
-      setShowPortal(false);
+      setActive(showPortal === false);
+      setShowPortal(showPortal === false);
     }
   }
 
@@ -71,7 +68,7 @@ export function Button({
       {showPortal &&
         content &&
         createPortal(
-          <div className="absolute min-w-[700px] w-[60%] h-[80%] rounded-lg overflow-hidden z-50">
+          <div className="absolute w-175 h-[80%] max-h-150 rounded-lg overflow-hidden z-50">
             {content}
           </div>,
           desktop
