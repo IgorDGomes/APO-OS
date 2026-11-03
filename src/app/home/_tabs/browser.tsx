@@ -4,6 +4,7 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   EllipsisVerticalIcon,
+  GlobeIcon,
   HouseIcon,
   LockIcon,
   MinusIcon,
@@ -12,35 +13,34 @@ import {
   WifiOffIcon,
   XIcon,
 } from "lucide-react";
-import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { HOME_URL, useBrowser } from "@/hooks/useBrowser";
 
-const allowedLinks: string[] = [
-  "https://apo-os.vercel.app",
-  "apo-os.vercel.app",
-  "https://example.com",
-  "example.com",
-];
+const BOOKMARKS = [
+  { name: "Apo OS", url: HOME_URL },
+  { name: "Example", url: "https://example.com" },
+  { name: "Wikipedia", url: "https://en.wikipedia.org" },
+  { name: "Map", url: "https://www.openstreetmap.org/export/embed.html?bbox=-74.51889038085939%2C40.47202439692057%2C-73.61251831054689%2C40.92181441237853&layer=mapnik" },
+]
 
 export function Browser() {
-  const [search, setSearch] = useState("");
-  const [link, setLink] = useState("");
-  const [validLink, setValidLink] = useState(false);
+  const {
+    address,
+    setAddress,
+    currentUrl,
+    reloadKey,
+    error,
+    navigate,
+    goBack,
+    goForward,
+    goHome,
+    reload,
+    canGoBack,
+    canGoForward,
+  } = useBrowser();
 
-  function isValidLink(e: FormEvent<HTMLFormElement>) {
-    if (allowedLinks.includes(search)) {
-      if (!search.startsWith("https://")) {
-        setSearch("https://" + search);
-        setLink("https://" + search);
-      } else {
-        setLink(search);
-        setValidLink(true);
-      }
-    } else {
-      setValidLink(false);
-    }
-
-    e.preventDefault();
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    navigate(address);
   }
 
   return (
@@ -64,30 +64,63 @@ export function Browser() {
           </div>
         </div>
         <div className="h-11 flex items-center">
-          <div className="flex px-5 gap-3">
-            <ArrowLeftIcon />
-            <ArrowRightIcon />
-            <RotateCwIcon />
-            <HouseIcon />
+          <div className="flex px-5 gap-1">
+            <button
+              type="button"
+              onClick={goBack}
+              disabled={!canGoBack}
+              aria-label="Go back"
+              title="Back"
+              className="p-1 rounded-md hover:not-disabled:bg-gray-100 disabled:opacity-30 hover:cursor-pointer disabled:cursor-default"
+            >
+              <ArrowLeftIcon />
+            </button>
+            <button
+              type="button"
+              onClick={goForward}
+              disabled={!canGoForward}
+              aria-label="Go forward"
+              title="Forward"
+              className="p-1 rounded-md hover:not-disabled:bg-gray-100 disabled:cursor-default disabled:opacity-30"
+            >
+              <ArrowRightIcon />
+            </button>
+            <button
+              type="button"
+              onClick={reload}
+              aria-label="Reload page"
+              title="Reload"
+              className="p-1 ml-1 rounded-md hover:bg-gray-100"
+            >
+              <RotateCwIcon />
+            </button>
+            <button
+              type="button"
+              onClick={goHome}
+              aria-label="Go home"
+              title="Home"
+              className="p-1 ml-1 rounded-md hover:bg-gray-100"
+            >
+              <HouseIcon />
+            </button>
           </div>
-          <div className="flex flex-grow h-[85%] rounded-full items-center bg-white">
+          <div className="flex grow h-[85%] rounded-full items-center bg-white">
             <button className="h-full hover:bg-black/20 rounded-s-full transition-colors">
               <LockIcon className=" mx-2.5" />
             </button>
             <form
-              action=""
               method="post"
               className="w-full h-full"
-              onSubmit={isValidLink}
+              onSubmit={handleSubmit}
             >
               <input
                 type="text"
                 className="font-semibold h-full w-full rounded-e-full px-1 outline-none"
+                aria-label="Address bar"
+                placeholder="Enter a URL"
                 name="linkInput"
-                value={search}
-                onChange={(d) => {
-                  setSearch(d.target.value);
-                }}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
               />
             </form>
           </div>
@@ -97,78 +130,22 @@ export function Browser() {
           </div>
         </div>
         <div className="h-6 flex items-center pl-8">
-          <ul className="flex items-center gap-6">
-            <li className="text-sm">
-              <Link
-                href={"https://apo-os.vercel.app"}
-                target="iframe"
-                onClick={() => {
-                  setValidLink(true);
-                  setLink("https://apo-os.vercel.app");
-                  setSearch("https://apo-os.vercel.app");
-                }}
-              >
-                Apo Os
-              </Link>
-            </li>
-            <li className="text-sm">
-              <Link
-                href={"https://example.com"}
-                target="iframe"
-                onClick={() => {
-                  setValidLink(true);
-                  setLink("https://example.com");
-                  setSearch("https://example.com");
-                }}
-              >
-                Example
-              </Link>
-            </li>
-            <li className="text-sm">
-              <Link
-                href={"https://en.wikipedia.org/"}
-                target="iframe"
-                onClick={() => {
-                  setValidLink(true);
-                  setLink("https://en.wikipedia.org/");
-                  setSearch("https://en.wikipedia.org/");
-                }}
-              >
-                Wikipedia
-              </Link>
-            </li>
-            <li className="text-sm">
-              <Link
-                href={
-                  "https://www.openstreetmap.org/export/embed.html?bbox=-74.51889038085939%2C40.47202439692057%2C-73.61251831054689%2C40.92181441237853&amp;layer=mapnik"
-                }
-                target="iframe"
-                onClick={() => {
-                  setValidLink(true);
-                  setLink(
-                    "https://www.openstreetmap.org/export/embed.html?bbox=-74.51889038085939%2C40.47202439692057%2C-73.61251831054689%2C40.92181441237853&amp;layer=mapnik"
-                  );
-                  setSearch(
-                    "https://www.openstreetmap.org/export/embed.html?bbox=-74.51889038085939%2C40.47202439692057%2C-73.61251831054689%2C40.92181441237853&amp;layer=mapnik"
-                  );
-                }}
-              >
-                Open Street Map
-              </Link>
-            </li>
-          </ul>
+          {BOOKMARKS.map((bookmark) => (
+            <button
+              key={bookmark.name}
+              type="button"
+              onClick={() => navigate(bookmark.url)}
+              className="flex shrink-0 items-center gap-2 rounded-md px-3 py-1.5 text-xs hover:bg-gray-200"
+            >
+              <GlobeIcon size={14} className="text-gray-500" />
+              {bookmark.name}
+            </button>
+          ))}
         </div>
       </header>
 
       <div className="h-[calc(100%-44px-40px-24px)] bg-[#EFEFEF]">
-        {validLink ? (
-          <iframe
-            className="w-full h-full bg-black"
-            name="iframe"
-            src={link}
-            sandbox="allow-forms allow-popups allow-scripts allow-same-origin allow-popups-to-escape-sandbox"
-          ></iframe>
-        ) : (
+        {error ? (
           <div className="bg-[#EFEFEF] w-full h-full flex justify-center">
             <div className="flex flex-col gap-4 pt-20">
               <div className="flex items-end gap-6">
@@ -180,9 +157,20 @@ export function Browser() {
                 <ul className="list-disc pl-10">
                   <li className="text-sm">Checking the network cables</li>
                   <li className="text-sm">Reconnecting to Wi-Fi</li>
+                  <li className="text-sm">USING ONLY WHAT IS GIVEN</li>
                 </ul>
               </div>
             </div>
+          </div>
+        ): (
+          <div className="min-h-0 h-full bg-white">
+            <iframe
+              key={reloadKey}
+              src={currentUrl}
+              title="Browser content"
+              className="h-full w-full border-0"
+              referrerPolicy="no-referrer"
+            />
           </div>
         )}
       </div>

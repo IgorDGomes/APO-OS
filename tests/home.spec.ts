@@ -105,8 +105,14 @@ test.describe("Clock", () => {
 
         await terminal.click({ button: 'left' })
         await expect(page.getByText("Clock")).toBeVisible();
-        await expect(page.getByText("Alarm", { exact: true })).toBeVisible();
-        await expect(page.getByText("Stopwatch")).toBeVisible();
-        await expect(page.getByText("Timer")).toBeVisible();
+        await expect(
+            page.getByRole("button", { name: "alarm", exact: true })
+        ).toBeVisible();
+        await expect(
+            page.getByRole("button", { name: "stopwatch", exact: true })
+        ).toBeVisible();
+        await expect(
+            page.getByRole("button", { name: "timer", exact: true })
+        ).toBeVisible();
     });
 })
