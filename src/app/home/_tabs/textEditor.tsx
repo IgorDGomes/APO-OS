@@ -61,34 +61,34 @@ export default function TextEditor() {
 
   return (
     <div className="flex h-full items-center justify-center bg-white/50">
-      <div className=" bg-zinc-950/80 h-full min-w-[50svw] w-full">
+      <div className=" bg-zinc-950/80 h-full w-full">
         {/* Navigation */}
-        <div className="bg-zinc-900 w-full h-7 flex items-center justify-between pl-3">
+        <header className="bg-zinc-900 w-full h-7 flex items-center justify-between pl-3">
           <div className="flex items-center h-full">
             <SquareChevronRight className="text-white size-5" />
             <div className="flex items-center h-full pl-2 text-xs tracking-wide text-white/75 overflow-hidden">
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default">
                 File
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default">
                 Edit
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default">
                 Selection
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default">
                 View
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default hidden">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default hidden">
                 Go
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default hidden">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default hidden">
                 Run
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default hidden">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default hidden">
                 Terminal
               </button>
-              <button className="hover:bg-white/10 hover:text-white rounded-[0.25rem] px-2 h-[calc(100%-8px)] cursor-default hidden">
+              <button className="hover:bg-white/10 hover:text-white rounded-sm px-2 h-[calc(100%-8px)] cursor-default hidden">
                 Help
               </button>
             </div>
@@ -98,7 +98,7 @@ export default function TextEditor() {
               display.cpp - folder - Code Editor
             </span>
           </div>
-          <div className="flex gap-[0.125rem] items-center h-full">
+          <div className="flex gap-0.5 items-center h-full">
             <button className="flex items-center justify-center p-1 hover:bg-white/10 rounded-md h-[calc(100%-8px)]">
               <PanelLeft className="text-white size-4" />
             </button>
@@ -123,7 +123,7 @@ export default function TextEditor() {
               </button>
             </div>
           </div>
-        </div>
+        </header>
         {/* Content */}
         <div className="flex h-[calc(100%-28px-20px)]">
           <div className="w-12 border-r border-white/10 flex flex-col justify-between bg-[rgb(34,34,37)]">
